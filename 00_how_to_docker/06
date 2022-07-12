@@ -1,0 +1,5 @@
+apt update -y
+apt upgrade -y
+apt install -y build-essential
+apt install -y clang
+apt install -y git
