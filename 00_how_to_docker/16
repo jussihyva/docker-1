@@ -1,0 +1,15 @@
+echo "pip install -U Flask" > $HOME/flask_setup
+echo "cd /root" >> $HOME/flask_setup
+echo "flask run --host=0.0.0.0 --port=3000" >> $HOME/flask_setup
+chmod +x $HOME/flask_setup
+cat << EOF > $HOME/hello.py
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return "<h1>Hello World</h1>"
+EOF
+
+docker run -it --rm --name Abathur -e FLASK_APP=hello -v $HOME:/root -p 3000:3000 python:2-slim bash /root/flask_setup
