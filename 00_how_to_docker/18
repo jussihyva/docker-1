@@ -1,0 +1,6 @@
+ssh-copy-id 10.13.199.216
+
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install -y docker.io
+sudo usermod -aG docker ${USER}
