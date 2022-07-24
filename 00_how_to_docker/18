@@ -1,6 +1,16 @@
-ssh-copy-id 10.13.199.216
+# Preparation activities to initialize docker-1 and docker-2
+# 
+# ssh-copy-id 10.13.199.216
+# ssh-copy-id 10.13.199.217
 
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt install -y docker.io
-sudo usermod -aG docker ${USER}
+# sudo apt -y update
+# sudo apt -y upgrade
+# sudo apt -y install net-tools
+# sudo apt -y install docker.io
+# sudo usermod -aG docker ${USER}
+
+VBoxManage startvm docker-1
+VBoxManage startvm docker-2
+
+# open -a Terminal $(pwd)
+# open -a Terminal $(pwd)
