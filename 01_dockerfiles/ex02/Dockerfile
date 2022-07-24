@@ -6,10 +6,11 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 17:28:01 by jkauppi           #+#    #+#              #
-#    Updated: 2022/07/23 17:57:07 by jkauppi          ###   ########.fr        #
+#    Updated: 2022/07/24 11:34:41 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 FROM ft-rails:on-build
 EXPOSE 3000
 CMD ["rails", "s", "-b", "0.0.0.0", "-p", "3000"]
+# rails s -b 0.0.0.0 -p 3000

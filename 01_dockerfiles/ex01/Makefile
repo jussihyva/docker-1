@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 13:50:18 by jkauppi           #+#    #+#              #
-#    Updated: 2022/07/24 10:05:55 by jkauppi          ###   ########.fr        #
+#    Updated: 2022/07/24 10:17:37 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ all: run
 		start \
 		license_accepted=1
 
+.PHONY: run
 run: re_build
 	-docker stop my_team_speak
 	docker run -it -d --rm \
