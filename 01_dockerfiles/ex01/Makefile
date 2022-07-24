@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 13:50:18 by jkauppi           #+#    #+#              #
-#    Updated: 2022/07/23 17:04:30 by jkauppi          ###   ########.fr        #
+#    Updated: 2022/07/24 10:05:55 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ all: run
 		license_accepted=1
 
 run: re_build
+	-docker stop my_team_speak
 	docker run -it -d --rm \
 	--name my_team_speak \
 	-p 9987:9987/udp \
