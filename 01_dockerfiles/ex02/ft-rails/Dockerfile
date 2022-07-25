@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 17:32:53 by jkauppi           #+#    #+#              #
-#    Updated: 2022/07/25 14:10:31 by jkauppi          ###   ########.fr        #
+#    Updated: 2022/07/25 14:23:05 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,4 +20,3 @@ WORKDIR /opt/app
 
 ONBUILD RUN rails new /opt/app
 ONBUILD RUN rails generate controller Articles index --skip-routes
-ONBUILD RUN ls -1
