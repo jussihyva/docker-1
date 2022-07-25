@@ -7,3 +7,4 @@ docker service create \
 42school/marine-squad
 
 # docker service rm marines
+# docker service inspect marines

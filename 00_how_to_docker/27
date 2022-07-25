@@ -1,3 +1,5 @@
 docker service update \
 --replicas 20 \
 marines
+
+# docker service inspect marines

@@ -1,2 +1,2 @@
-docker ps -a
+docker ps
 docker logs -f engineering-bay.<modify_this_part>

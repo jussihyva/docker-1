@@ -1,1 +1,3 @@
 docker service ps marines
+
+# docker service ps -f "desired-state=Running" marines

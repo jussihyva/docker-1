@@ -6,19 +6,25 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 13:50:18 by jkauppi           #+#    #+#              #
-#    Updated: 2022/07/24 18:50:33 by jkauppi          ###   ########.fr        #
+#    Updated: 2022/07/25 14:10:56 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# https://guides.rubyonrails.org/getting_started.html
 
 DOCKERFILE				=	Dockerfile
 ROUTE_FILE_PATH			=	config/routes.rb
 INDEX_FILE_PATH			=	app/views/articles/index.html.erb
 SHOW_FILE_PATH			=	app/views/articles/show.html.erb
+NEW_FILE_PATH			=	app/views/articles/new.html.erb
 CONSOLE_CMD_FILE_PATH	=	test/helpers/console_cmd.rb
 CONTROLLER_FILE_PATH	=	app/controllers/articles_controller.rb
+VALIDATE_FILE_PATH		=	app/models/article.rb
+
 
 .PHONY: all
 all: run model migrate
+# all: run
 
 .PHONY: run
 run: re_build_generic
@@ -30,9 +36,11 @@ run: re_build_generic
 	-v $(PWD)/app/$(ROUTE_FILE_PATH):/opt/app/$(ROUTE_FILE_PATH) \
 	-v $(PWD)/app/$(INDEX_FILE_PATH):/opt/app/$(INDEX_FILE_PATH) \
 	-v $(PWD)/app/$(SHOW_FILE_PATH):/opt/app/$(SHOW_FILE_PATH) \
+	-v $(PWD)/app/$(NEW_FILE_PATH):/opt/app/$(NEW_FILE_PATH) \
 	-v $(PWD)/app/$(CONSOLE_CMD_FILE_PATH):/opt/app/$(CONSOLE_CMD_FILE_PATH) \
 	-v $(PWD)/app/$(CONTROLLER_FILE_PATH):/opt/app/$(CONTROLLER_FILE_PATH) \
 	generic
+	# -v $(PWD)/app/$(VALIDATE_FILE_PATH):/opt/app/$(VALIDATE_FILE_PATH) \
 
 re_build_generic: re_build_ft-rails $(DOCKERFILE)
 	docker build -t generic .
@@ -54,4 +62,6 @@ migrate:
 console:
 	docker exec -it generic rails console
 
-
+.PHONY: bash
+bash:
+	docker exec -it generic bash
