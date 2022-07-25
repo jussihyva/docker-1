@@ -11,4 +11,4 @@ RUN curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/scrip
 # RUN EXTERNAL_URL="https://localhost" apt-get -y install gitlab-ce
 RUN apt-get -y install gitlab-ce
 
-# ENTRYPOINT (/opt/gitlab/embedded/bin/runsvdir-start &) && gitlab-ctl reconfigure && tail -f /dev/null
+# ENTRYPOINT service ssh restart && (/opt/gitlab/embedded/bin/runsvdir-start &) && gitlab-ctl reconfigure && tail -f /dev/null
