@@ -8,7 +8,11 @@ all: run
 run: build
 	-docker stop gitlab
 	$(info $(INFO_MESSAGE))
-	docker run -it --rm -d --name gitlab -p 2222:22 -p 443:443 -p 80:80 gitlab
+	@sleep 1
+	docker run -it --rm -d --name gitlab \
+		-p 2222:22 -p 443:443 -p 80:80 -p 8080:8080 \
+		-v $(PWD)/gitlab.rb:/etc/gitlab/gitlab.rb \
+		gitlab
 
 build: $(DOCKERFILE)
 	docker build -t gitlab .
