@@ -39,5 +39,9 @@ logs:
 login:
 	docker exec -it gitlab bash
 
+# git config --global http.sslVerify false
+
 # git clone https://localhost/jkauppi/ddd.git
+
+# ssh -p 2222 -T  git@localhost
 # git clone ssh://git@localhost:2222/jkauppi/ddd.git
