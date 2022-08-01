@@ -1,4 +1,5 @@
 DOCKERFILE				=	Dockerfile
+INFO_MESSAGE			=	Already started gitlab container will be stopped if any
 
 .PHONY: all
 all: run
@@ -6,7 +7,8 @@ all: run
 .PHONY: run
 run: build
 	-docker stop gitlab
-	docker run -it --rm --name gitlib -p 2222:22 --privileged gitlab bash
+	$(info $(INFO_MESSAGE))
+	docker run -it --rm -d --name gitlab -p 2222:22 -p 443:443 -p 80:80 gitlab
 
 build: $(DOCKERFILE)
 	docker build -t gitlab .

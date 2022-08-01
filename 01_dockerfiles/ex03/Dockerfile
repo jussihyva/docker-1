@@ -5,10 +5,15 @@ RUN apt-get -y install openssh-server
 RUN apt-get -y install ca-certificates
 RUN apt-get -y install tzdata
 RUN apt-get -y install perl
-# RUN apt-get install -y postfix
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install postfix
 
-RUN curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | bash
-# RUN EXTERNAL_URL="https://localhost" apt-get -y install gitlab-ce
-RUN apt-get -y install gitlab-ce
+RUN curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | bash
+# RUN EXTERNAL_URL="http://localhost" apt-get -y install gitlab-ee
+RUN apt-get -y install gitlab-ee
+# RUN /opt/gitlab/embedded/bin/runsvdir-start&
+# RUN gitlab-ctl reconfigure
+RUN service ssh start
 
-# ENTRYPOINT service ssh restart && (/opt/gitlab/embedded/bin/runsvdir-start &) && gitlab-ctl reconfigure && tail -f /dev/null
+# ENTRYPOINT gitlab-ctl restart && tail -f /dev/null
+ENTRYPOINT (/opt/gitlab/embedded/bin/runsvdir-start &) && gitlab-ctl reconfigure && tail -f /dev/null
+# ENTRYPOINT (/opt/gitlab/embedded/bin/runsvdir-start &) && service ssh restart && gitlab-ctl reconfigure && tail -f /dev/null
