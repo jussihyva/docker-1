@@ -984,8 +984,8 @@ external_url 'https://localhost'
 
 # puma['enable'] = true
 # puma['ha'] = false
-# puma['worker_timeout'] = 60
-# puma['worker_processes'] = 2
+puma['worker_timeout'] = 120
+puma['worker_processes'] = 0
 # puma['min_threads'] = 4
 # puma['max_threads'] = 4
 
@@ -993,7 +993,7 @@ external_url 'https://localhost'
 # puma['listen'] = '127.0.0.1'
 # puma['port'] = 8080
 # puma['socket'] = '/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket'
-# puma['somaxconn'] = 1024
+puma['somaxconn'] = 512
 
 ### SSL settings
 # puma['ssl_listen'] = nil
@@ -1040,7 +1040,7 @@ external_url 'https://localhost'
 # sidekiq['shutdown_timeout'] = 4
 # sidekiq['queue_selector'] = false
 # sidekiq['interval'] = nil
-# sidekiq['max_concurrency'] = 50
+sidekiq['max_concurrency'] = 10
 # sidekiq['min_concurrency'] = nil
 
 ##! GitLab allows route a job to a particular queue determined by an array of ##! routing rules.
@@ -1125,7 +1125,7 @@ external_url 'https://localhost'
 # postgresql['connect_port'] = 5432
 
 ##! **recommend value is 1/4 of total RAM, up to 14GB.**
-# postgresql['shared_buffers'] = "256MB"
+postgresql['shared_buffers'] = "256MB"
 
 ### Advanced settings
 # postgresql['ha'] = false
@@ -2479,7 +2479,6 @@ external_url 'https://localhost'
 # Let's Encrypt integration
 ################################################################################
 letsencrypt['enable'] = false
-# letsencrypt['enable'] = nil
 # letsencrypt['contact_emails'] = [] # This should be an array of email addresses to add as contacts
 # letsencrypt['group'] = 'root'
 # letsencrypt['key_size'] = 2048
