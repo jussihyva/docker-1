@@ -6,7 +6,7 @@
 #    By: jkauppi <jkauppi@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/23 13:50:18 by jkauppi           #+#    #+#              #
-#    Updated: 2022/07/25 14:28:22 by jkauppi          ###   ########.fr        #
+#    Updated: 2022/08/02 18:54:56 by jkauppi          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,6 @@ run: re_build_generic
 	-v $(PWD)/app/$(FORM_FILE_PATH):/opt/app/$(FORM_FILE_PATH) \
 	-v $(PWD)/app/$(EDIT_FILE_PATH):/opt/app/$(EDIT_FILE_PATH) \
 	generic
-	# -v $(PWD)/app/$(VALIDATE_FILE_PATH):/opt/app/$(VALIDATE_FILE_PATH) \
 
 re_build_generic: re_build_ft-rails $(DOCKERFILE)
 	docker build -t generic .

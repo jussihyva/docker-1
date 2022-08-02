@@ -1,5 +1,7 @@
-apt update -y
-apt upgrade -y
-apt install -y build-essential
-apt install -y clang
-apt install -y git
+# docker run -it --rm --name debian debian bash
+apt -y update
+apt -y upgrade
+apt -y install build-essential
+apt -y install clang
+apt -y install git
+apt -y install vim
