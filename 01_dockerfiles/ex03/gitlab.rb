@@ -1040,7 +1040,7 @@ puma['somaxconn'] = 512
 # sidekiq['shutdown_timeout'] = 4
 # sidekiq['queue_selector'] = false
 # sidekiq['interval'] = nil
-sidekiq['max_concurrency'] = 10
+sidekiq['max_concurrency'] = 2
 # sidekiq['min_concurrency'] = nil
 
 ##! GitLab allows route a job to a particular queue determined by an array of ##! routing rules.
@@ -1189,8 +1189,8 @@ postgresql['shared_buffers'] = "256MB"
 
 ###! Changing any of these settings only requires a reload of postgresql. You do not need to
 ###! restart postgresql if you change any of these and run reconfigure.
-# postgresql['work_mem'] = "16MB"
-# postgresql['maintenance_work_mem'] = "16MB"
+postgresql['work_mem'] = "16MB"
+postgresql['maintenance_work_mem'] = "16MB"
 # postgresql['checkpoint_timeout'] = "5min"
 # postgresql['checkpoint_completion_target'] = 0.9
 # postgresql['effective_io_concurrency'] = 1
@@ -2206,7 +2206,7 @@ postgresql['shared_buffers'] = "256MB"
 # gitlab_exporter['consul_service_meta'] = {}
 
 # To completely disable prometheus, and all of it's exporters, set to false
-# prometheus_monitoring['enable'] = true
+prometheus_monitoring['enable'] = false
 
 ################################################################################
 ## Grafana Dashboards

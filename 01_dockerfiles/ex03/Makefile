@@ -7,12 +7,13 @@ END					=	\033[0m
 DOCKERFILE			=	Dockerfile
 INFO_MESSAGE		=	Already started gitlab container will be stopped if any
 CERT_NAME			=	localhost
+IS_IMAGE_FILE		=	$(shell docker image ls | grep gitlab)
 
 .PHONY: all
 all: run
 
 .PHONY: run
-run: $(CERT_NAME).crt build
+run: $(CERT_NAME).crt check_image_file build
 	-docker stop gitlab
 	$(info $(INFO_MESSAGE))
 	@sleep 1
@@ -30,6 +31,21 @@ run: $(CERT_NAME).crt build
 build: $(DOCKERFILE)
 	docker build -t gitlab .
 	touch build
+
+.PHONY: check_image_file
+check_image_file:
+ifeq ($(IS_IMAGE_FILE),)
+	-rm f build
+endif
+
+.PHONY: clean
+clean:
+
+.PHONY: fclean
+fclean:
+	-rm -f build
+	-rm -f $(CERT_NAME).key
+	-rm -f $(CERT_NAME).crt
 
 $(CERT_NAME).crt:
 	@openssl req -x509 -nodes -newkey rsa:2048 \
