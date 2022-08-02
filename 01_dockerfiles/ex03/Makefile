@@ -8,15 +8,13 @@ DOCKERFILE			=	Dockerfile
 INFO_MESSAGE		=	Already started gitlab container will be stopped if any
 CERT_NAME			=	localhost
 IS_IMAGE_FILE		=	$(shell docker image ls | grep gitlab)
+IS_MEMORY_SET		=	$(shell egrep '"memoryMiB": 4096' "${HOME}/Library/Group Containers/group.com.docker/settings.json")
 
 .PHONY: all
 all: run
 
 .PHONY: run
-run: $(CERT_NAME).crt check_image_file build
-	-docker stop gitlab
-	$(info $(INFO_MESSAGE))
-	@sleep 1
+run: set_docker_memory $(CERT_NAME).crt check_image_file stop build
 	docker run -it --rm -d --name gitlab \
 		--privileged \
 		-p 2222:22 \
@@ -32,10 +30,27 @@ build: $(DOCKERFILE)
 	docker build -t gitlab .
 	touch build
 
+.PHONY: stop
+stop:
+	-docker stop gitlab
+	$(info $(INFO_MESSAGE))
+	@sleep 1
+
 .PHONY: check_image_file
 check_image_file:
 ifeq ($(IS_IMAGE_FILE),)
 	-rm f build
+endif
+
+.PHONY: set_docker_memory
+set_docker_memory:
+ifeq ($(IS_MEMORY_SET),)
+	@sed -i "" 's/"memoryMiB".*/"memoryMiB": 4096,/g' "${HOME}/Library/Group Containers/group.com.docker/settings.json"
+	@test -z "$(docker ps -q 2>/dev/null)" && osascript -e 'quit app "Docker"'
+	@open --background -a Docker
+	$(info "Docker memory limit is set to 4G.")
+	$(info "Wait 30 seconds to start docker")
+	@sleep 30
 endif
 
 .PHONY: clean
@@ -69,11 +84,19 @@ logs:
 login:
 	docker exec -it gitlab bash
 
+.PHONY: clone_ssh
+clone_ssh:
+	$(info "NOTE: Copy ssh public key into gitlab!")
+	ssh -p 2222 -T git@localhost
+	# git clone ssh://git@localhost:2222/jkauppi/ddd.git
+	git config --global http.sslVerify false
+	git clone ssh://$(URL)
+	git config --global --unset http.sslVerify
+
+.PHONY: clone_https
+clone_https:
+	git config --global http.sslVerify false
+	git clone $(URL)
+	git config --global --unset http.sslVerify
+
 # ^(?!#)\S
-
-# git config --global http.sslVerify false
-
-# git clone https://localhost/jkauppi/ddd.git
-
-# ssh -p 2222 -T  git@localhost
-# git clone ssh://git@localhost:2222/jkauppi/ddd.git
