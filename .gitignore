@@ -4,3 +4,5 @@
 01_dockerfiles/ex02/re_build_generic
 01_dockerfiles/ex03/build
 01_dockerfiles/ex03/localhost.*
+02_bonus/container_with_grafana_influxdb/influxdb-selfsigned.crt
+02_bonus/container_with_grafana_influxdb/influxdb-selfsigned.key
