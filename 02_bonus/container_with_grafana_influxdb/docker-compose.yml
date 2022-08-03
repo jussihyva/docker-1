@@ -1,0 +1,30 @@
+version: '3'
+services:
+  influxdb:
+    image: influxdb:1.8.9
+    container_name: influxdb
+    env_file:
+      - ./.env
+    ports:
+      - '8086:8086'
+    volumes:
+      - influxdb-storage:/var/lib/influxdb:rw
+      - ./influxdb.conf:/etc/influxdb/influxdb.conf:ro
+      - ./influxdb-selfsigned.key:/etc/ssl/influxdb-selfsigned.key:ro
+      - ./influxdb-selfsigned.crt:/etc/ssl/influxdb-selfsigned.crt:ro
+  grafana:
+    image: grafana/grafana:8.1.1
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    volumes:
+      - grafana-storage:/var/lib/grafana:rw
+      - ./grafana-provisioning/:/etc/grafana/provisioning:ro
+      - ./influxdb-selfsigned.key:/etc/ssl/private/influxdb-selfsigned.key:ro
+      - ./influxdb-selfsigned.crt:/etc/ssl/certs/influxdb-selfsigned.crt:ro
+      - ./grafana_custom.ini:/etc/grafana/grafana.ini:ro
+    depends_on:
+      - influxdb
+volumes:
+  influxdb-storage:
+  grafana-storage:

@@ -1,0 +1,59 @@
+# Preparation activities to initialize docker-1, docker-2 and docker-3
+# 
+# ssh-copy-id 10.13.199.217
+# ssh-copy-id 10.13.199.216
+# ssh-copy-id 10.13.199.213
+
+# ssh-keygen
+# sudo apt -y update
+# sudo apt -y upgrade
+# sudo apt -y install net-tools
+# sudo apt -y install docker.io
+# sudo usermod -aG docker ${USER}
+
+VBoxManage startvm docker-1
+VBoxManage startvm docker-2
+VBoxManage startvm docker-3
+
+open -a Terminal $(pwd)
+open -a Terminal $(pwd)
+open -a Terminal $(pwd)
+
+# Actions for docker-1
+ssh 10.13.199.217
+docker swarm leave
+docker swarm init
+docker network create -d overlay overmind
+
+# Actions for docker-2
+ssh 10.13.199.216
+docker swarm leave
+docker swarm join --token <copy from docker-1 printout> 10.13.199.217:2377
+
+# Actions for docker-3
+ssh 10.13.199.213
+docker swarm leave
+docker swarm join --token <copy from docker-1 printout> 10.13.199.217:2377
+
+# Actions for docker-1
+docker service ls
+
+docker service create \
+--name orbital-command \
+--network overmind \
+-e RABBITMQ_DEFAULT_USER=jkauppi -e RABBITMQ_DEFAULT_PASS=puuro \
+rabbitmq
+
+docker service ls
+docker service ps orbital-command
+
+docker service create \
+--name marines \
+--network overmind \
+--replicas 20 \
+--env OC_USERNAME=jkauppi \
+--env OC_PASSWD=puuro \
+42school/marine-squad
+
+docker service ls
+docker service ps marines
